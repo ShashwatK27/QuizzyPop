@@ -1,0 +1,1752 @@
+[
+  {
+    "model": "quiz.question",
+    "pk": 1,
+    "fields": {
+      "question": "What type of learning uses labeled data?",
+      "option_a": "Unsupervised",
+      "option_b": "Reinforcement",
+      "option_c": "Supervised",
+      "option_d": "Semi-supervised",
+      "correct_index": 2,
+      "subject": "machine_learning",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 2,
+    "fields": {
+      "question": "Which problem is classification?",
+      "option_a": "House price",
+      "option_b": "Temperature",
+      "option_c": "Spam detection",
+      "option_d": "Stock price",
+      "correct_index": 2,
+      "subject": "machine_learning",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 3,
+    "fields": {
+      "question": "Overfitting means:",
+      "option_a": "Good generalization",
+      "option_b": "Fits train not test",
+      "option_c": "Too simple",
+      "option_d": "No data",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 4,
+    "fields": {
+      "question": "Underfitting occurs when:",
+      "option_a": "Too complex",
+      "option_b": "Too simple",
+      "option_c": "Too accurate",
+      "option_d": "Overtrained",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 5,
+    "fields": {
+      "question": "Logistic regression is used for:",
+      "option_a": "Regression",
+      "option_b": "Classification",
+      "option_c": "Clustering",
+      "option_d": "PCA",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 6,
+    "fields": {
+      "question": "Gradient descent is used to:",
+      "option_a": "Maximize loss",
+      "option_b": "Minimize loss",
+      "option_c": "Normalize",
+      "option_d": "Cluster",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 7,
+    "fields": {
+      "question": "Learning rate controls:",
+      "option_a": "Accuracy",
+      "option_b": "Step size",
+      "option_c": "Features",
+      "option_d": "Labels",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 8,
+    "fields": {
+      "question": "Confusion matrix is for:",
+      "option_a": "Regression",
+      "option_b": "Clustering",
+      "option_c": "Classification",
+      "option_d": "Scaling",
+      "correct_index": 2,
+      "subject": "machine_learning",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 9,
+    "fields": {
+      "question": "Precision measures:",
+      "option_a": "TP/(TP+FP)",
+      "option_b": "TP/(TP+FN)",
+      "option_c": "TN/(TN+FP)",
+      "option_d": "All",
+      "correct_index": 0,
+      "subject": "machine_learning",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 10,
+    "fields": {
+      "question": "Recall measures:",
+      "option_a": "TP/(TP+FP)",
+      "option_b": "TP/(TP+FN)",
+      "option_c": "TN/(TN+FP)",
+      "option_d": "Accuracy",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 11,
+    "fields": {
+      "question": "F1-score is:",
+      "option_a": "Mean",
+      "option_b": "Harmonic mean",
+      "option_c": "Sum",
+      "option_d": "Diff",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 12,
+    "fields": {
+      "question": "KNN stands for:",
+      "option_a": "Kernel NN",
+      "option_b": "K Nearest Neighbors",
+      "option_c": "Known NN",
+      "option_d": "Key NN",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 13,
+    "fields": {
+      "question": "K-means is:",
+      "option_a": "Supervised",
+      "option_b": "Unsupervised",
+      "option_c": "Reinforcement",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 14,
+    "fields": {
+      "question": "PCA is used for:",
+      "option_a": "Clustering",
+      "option_b": "Regression",
+      "option_c": "Dimensionality reduction",
+      "option_d": "Classification",
+      "correct_index": 2,
+      "subject": "machine_learning",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 15,
+    "fields": {
+      "question": "Random forest is:",
+      "option_a": "Single tree",
+      "option_b": "Multiple trees",
+      "option_c": "Linear model",
+      "option_d": "Cluster",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 16,
+    "fields": {
+      "question": "Bias refers to:",
+      "option_a": "High variance",
+      "option_b": "Wrong assumptions",
+      "option_c": "Noise",
+      "option_d": "Scaling",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 17,
+    "fields": {
+      "question": "Variance refers to:",
+      "option_a": "Mean",
+      "option_b": "Sensitivity to data",
+      "option_c": "Bias",
+      "option_d": "Error",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 18,
+    "fields": {
+      "question": "Regularization helps:",
+      "option_a": "Overfit",
+      "option_b": "Reduce overfit",
+      "option_c": "Increase data",
+      "option_d": "Remove labels",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 19,
+    "fields": {
+      "question": "L1 is called:",
+      "option_a": "Ridge",
+      "option_b": "Lasso",
+      "option_c": "Elastic",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 20,
+    "fields": {
+      "question": "Clustering is:",
+      "option_a": "Supervised",
+      "option_b": "Unsupervised",
+      "option_c": "Reinforcement",
+      "option_d": "Semi",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 21,
+    "fields": {
+      "question": "ROC curve plots:",
+      "option_a": "TPR vs FPR",
+      "option_b": "Precision vs Recall",
+      "option_c": "Loss vs Epoch",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 22,
+    "fields": {
+      "question": "Feature scaling needed for:",
+      "option_a": "Tree",
+      "option_b": "KNN",
+      "option_c": "Forest",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 23,
+    "fields": {
+      "question": "Cross-validation is for:",
+      "option_a": "Training",
+      "option_b": "Testing reliability",
+      "option_c": "Scaling",
+      "option_d": "Cleaning",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 24,
+    "fields": {
+      "question": "Logistic output is:",
+      "option_a": "Continuous",
+      "option_b": "Probability",
+      "option_c": "Integer",
+      "option_d": "Binary",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 25,
+    "fields": {
+      "question": "Imbalanced metric:",
+      "option_a": "Accuracy",
+      "option_b": "F1",
+      "option_c": "Mean",
+      "option_d": "Variance",
+      "correct_index": 1,
+      "subject": "machine_learning",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 26,
+    "fields": {
+      "question": "OS is:",
+      "option_a": "Compiler",
+      "option_b": "Interface",
+      "option_c": "App",
+      "option_d": "DB",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 27,
+    "fields": {
+      "question": "Process is:",
+      "option_a": "File",
+      "option_b": "Program in execution",
+      "option_c": "Memory",
+      "option_d": "CPU",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 28,
+    "fields": {
+      "question": "PCB stands for:",
+      "option_a": "Program block",
+      "option_b": "Process control block",
+      "option_c": "Process code",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 29,
+    "fields": {
+      "question": "CPU scheduling decides:",
+      "option_a": "Memory",
+      "option_b": "CPU",
+      "option_c": "Disk",
+      "option_d": "File",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 30,
+    "fields": {
+      "question": "FCFS means:",
+      "option_a": "Fast",
+      "option_b": "First come first serve",
+      "option_c": "File",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 31,
+    "fields": {
+      "question": "Round Robin uses:",
+      "option_a": "Priority",
+      "option_b": "Time quantum",
+      "option_c": "FIFO",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 32,
+    "fields": {
+      "question": "Deadlock is:",
+      "option_a": "Crash",
+      "option_b": "Wait forever",
+      "option_c": "Fast exec",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 33,
+    "fields": {
+      "question": "Semaphore used for:",
+      "option_a": "Memory",
+      "option_b": "Sync",
+      "option_c": "Disk",
+      "option_d": "CPU",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 34,
+    "fields": {
+      "question": "Paging avoids:",
+      "option_a": "Internal",
+      "option_b": "External",
+      "option_c": "Deadlock",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 35,
+    "fields": {
+      "question": "Thrashing is:",
+      "option_a": "High CPU",
+      "option_b": "High paging",
+      "option_c": "Low mem",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 36,
+    "fields": {
+      "question": "Virtual memory uses:",
+      "option_a": "RAM",
+      "option_b": "Disk",
+      "option_c": "Cache",
+      "option_d": "Reg",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 37,
+    "fields": {
+      "question": "Preemptive:",
+      "option_a": "FCFS",
+      "option_b": "RR",
+      "option_c": "FIFO",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 38,
+    "fields": {
+      "question": "Critical section deals with:",
+      "option_a": "CPU",
+      "option_b": "Sync",
+      "option_c": "Mem",
+      "option_d": "Disk",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 39,
+    "fields": {
+      "question": "Starvation:",
+      "option_a": "Deadlock",
+      "option_b": "No CPU",
+      "option_c": "Loop",
+      "option_d": "Crash",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 40,
+    "fields": {
+      "question": "Banker algo avoids:",
+      "option_a": "Starvation",
+      "option_b": "Deadlock",
+      "option_c": "Paging",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 41,
+    "fields": {
+      "question": "Context switch:",
+      "option_a": "Mem swap",
+      "option_b": "State change",
+      "option_c": "Disk",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 42,
+    "fields": {
+      "question": "Kernel is:",
+      "option_a": "App",
+      "option_b": "Core OS",
+      "option_c": "Compiler",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 43,
+    "fields": {
+      "question": "Multithreading improves:",
+      "option_a": "Mem",
+      "option_b": "CPU util",
+      "option_c": "Disk",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 44,
+    "fields": {
+      "question": "Internal frag in:",
+      "option_a": "Paging",
+      "option_b": "Segmentation",
+      "option_c": "Both",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "operating_systems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 45,
+    "fields": {
+      "question": "External frag in:",
+      "option_a": "Paging",
+      "option_b": "Segmentation",
+      "option_c": "Both",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 46,
+    "fields": {
+      "question": "Mutual exclusion:",
+      "option_a": "Parallel",
+      "option_b": "Single access",
+      "option_c": "Fast",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 47,
+    "fields": {
+      "question": "I/O bound:",
+      "option_a": "CPU heavy",
+      "option_b": "IO heavy",
+      "option_c": "None",
+      "option_d": "Idle",
+      "correct_index": 1,
+      "subject": "operating_systems",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 48,
+    "fields": {
+      "question": "CPU bound:",
+      "option_a": "CPU heavy",
+      "option_b": "IO heavy",
+      "option_c": "None",
+      "option_d": "Idle",
+      "correct_index": 0,
+      "subject": "operating_systems",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 49,
+    "fields": {
+      "question": "FIFO is:",
+      "option_a": "Scheduling",
+      "option_b": "Memory",
+      "option_c": "Disk",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "operating_systems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 50,
+    "fields": {
+      "question": "Dispatcher does:",
+      "option_a": "Assign CPU",
+      "option_b": "Free mem",
+      "option_c": "Disk read",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "operating_systems",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 51,
+    "fields": {
+      "question": "DBMS stands for:",
+      "option_a": "Data base",
+      "option_b": "Database Management System",
+      "option_c": "Data system",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 52,
+    "fields": {
+      "question": "SQL is:",
+      "option_a": "Lang",
+      "option_b": "OS",
+      "option_c": "DB",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 53,
+    "fields": {
+      "question": "Primary key:",
+      "option_a": "Duplicate",
+      "option_b": "Unique",
+      "option_c": "Null",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 54,
+    "fields": {
+      "question": "Foreign key:",
+      "option_a": "Unique",
+      "option_b": "Relation",
+      "option_c": "Sort",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 55,
+    "fields": {
+      "question": "Normalization reduces:",
+      "option_a": "Redundancy",
+      "option_b": "Speed",
+      "option_c": "Security",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 56,
+    "fields": {
+      "question": "1NF removes:",
+      "option_a": "Partial dep",
+      "option_b": "Repeating groups",
+      "option_c": "Transitive",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 57,
+    "fields": {
+      "question": "2NF removes:",
+      "option_a": "Partial",
+      "option_b": "Transitive",
+      "option_c": "Both",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 58,
+    "fields": {
+      "question": "3NF removes:",
+      "option_a": "Partial",
+      "option_b": "Transitive",
+      "option_c": "Both",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 59,
+    "fields": {
+      "question": "Join is used for:",
+      "option_a": "Insert",
+      "option_b": "Combine tables",
+      "option_c": "Delete",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 60,
+    "fields": {
+      "question": "Index improves:",
+      "option_a": "Insert",
+      "option_b": "Search",
+      "option_c": "Delete",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 61,
+    "fields": {
+      "question": "ACID stands for:",
+      "option_a": "Atomicity etc",
+      "option_b": "None",
+      "option_c": "DB",
+      "option_d": "Lang",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 62,
+    "fields": {
+      "question": "Transaction is:",
+      "option_a": "Single op",
+      "option_b": "Set ops",
+      "option_c": "None",
+      "option_d": "File",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 63,
+    "fields": {
+      "question": "Deadlock in DB:",
+      "option_a": "Crash",
+      "option_b": "Wait",
+      "option_c": "None",
+      "option_d": "Fast",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 64,
+    "fields": {
+      "question": "ER model:",
+      "option_a": "Graph",
+      "option_b": "Diagram",
+      "option_c": "Code",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 65,
+    "fields": {
+      "question": "Entity:",
+      "option_a": "Object",
+      "option_b": "Key",
+      "option_c": "Rel",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 66,
+    "fields": {
+      "question": "Attribute:",
+      "option_a": "Property",
+      "option_b": "Key",
+      "option_c": "Table",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 67,
+    "fields": {
+      "question": "Candidate key:",
+      "option_a": "Unique",
+      "option_b": "Dup",
+      "option_c": "Null",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 68,
+    "fields": {
+      "question": "Super key:",
+      "option_a": "Unique set",
+      "option_b": "Dup",
+      "option_c": "Null",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 69,
+    "fields": {
+      "question": "DDL includes:",
+      "option_a": "Select",
+      "option_b": "Create",
+      "option_c": "Insert",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 70,
+    "fields": {
+      "question": "DML includes:",
+      "option_a": "Create",
+      "option_b": "Insert",
+      "option_c": "Drop",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 71,
+    "fields": {
+      "question": "View is:",
+      "option_a": "Table",
+      "option_b": "Virtual table",
+      "option_c": "File",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 72,
+    "fields": {
+      "question": "Trigger is:",
+      "option_a": "Auto action",
+      "option_b": "Manual",
+      "option_c": "None",
+      "option_d": "File",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 73,
+    "fields": {
+      "question": "Stored procedure:",
+      "option_a": "Code",
+      "option_b": "Data",
+      "option_c": "File",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 74,
+    "fields": {
+      "question": "Concurrency control:",
+      "option_a": "Speed",
+      "option_b": "Consistency",
+      "option_c": "None",
+      "option_d": "Size",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 75,
+    "fields": {
+      "question": "Locking ensures:",
+      "option_a": "Speed",
+      "option_b": "Isolation",
+      "option_c": "None",
+      "option_d": "Size",
+      "correct_index": 1,
+      "subject": "dbms",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 76,
+    "fields": {
+      "question": "SDLC is:",
+      "option_a": "Life cycle",
+      "option_b": "Code",
+      "option_c": "DB",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 77,
+    "fields": {
+      "question": "Waterfall is:",
+      "option_a": "Iterative",
+      "option_b": "Sequential",
+      "option_c": "Agile",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 78,
+    "fields": {
+      "question": "Agile is:",
+      "option_a": "Rigid",
+      "option_b": "Flexible",
+      "option_c": "None",
+      "option_d": "Slow",
+      "correct_index": 1,
+      "subject": "software_engineering",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 79,
+    "fields": {
+      "question": "Scrum uses:",
+      "option_a": "Sprint",
+      "option_b": "Waterfall",
+      "option_c": "None",
+      "option_d": "Code",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 80,
+    "fields": {
+      "question": "Unit testing:",
+      "option_a": "Whole",
+      "option_b": "Module",
+      "option_c": "DB",
+      "option_d": "None",
+      "correct_index": 1,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 81,
+    "fields": {
+      "question": "Integration testing:",
+      "option_a": "Modules together",
+      "option_b": "Single",
+      "option_c": "None",
+      "option_d": "DB",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 82,
+    "fields": {
+      "question": "System testing:",
+      "option_a": "Full system",
+      "option_b": "Unit",
+      "option_c": "None",
+      "option_d": "Code",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 83,
+    "fields": {
+      "question": "Black box:",
+      "option_a": "Code",
+      "option_b": "Functionality",
+      "option_c": "None",
+      "option_d": "Mem",
+      "correct_index": 1,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 84,
+    "fields": {
+      "question": "White box:",
+      "option_a": "Code",
+      "option_b": "Function",
+      "option_c": "None",
+      "option_d": "UI",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 85,
+    "fields": {
+      "question": "Requirement is:",
+      "option_a": "Need",
+      "option_b": "Code",
+      "option_c": "DB",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 86,
+    "fields": {
+      "question": "Feasibility:",
+      "option_a": "Possible",
+      "option_b": "Code",
+      "option_c": "None",
+      "option_d": "File",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 87,
+    "fields": {
+      "question": "Risk mgmt:",
+      "option_a": "Avoid issues",
+      "option_b": "Code",
+      "option_c": "None",
+      "option_d": "DB",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 88,
+    "fields": {
+      "question": "UML is:",
+      "option_a": "Diagram",
+      "option_b": "Code",
+      "option_c": "None",
+      "option_d": "DB",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 89,
+    "fields": {
+      "question": "Use case:",
+      "option_a": "Scenario",
+      "option_b": "Code",
+      "option_c": "None",
+      "option_d": "File",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 90,
+    "fields": {
+      "question": "Version control:",
+      "option_a": "Track",
+      "option_b": "Delete",
+      "option_c": "None",
+      "option_d": "Run",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 91,
+    "fields": {
+      "question": "Git is:",
+      "option_a": "VCS",
+      "option_b": "DB",
+      "option_c": "OS",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 92,
+    "fields": {
+      "question": "CI/CD:",
+      "option_a": "Auto deploy",
+      "option_b": "Manual",
+      "option_c": "None",
+      "option_d": "DB",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 93,
+    "fields": {
+      "question": "Bug:",
+      "option_a": "Error",
+      "option_b": "Feature",
+      "option_c": "None",
+      "option_d": "Code",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 94,
+    "fields": {
+      "question": "Debugging:",
+      "option_a": "Fix",
+      "option_b": "Run",
+      "option_c": "None",
+      "option_d": "Stop",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 95,
+    "fields": {
+      "question": "Maintenance:",
+      "option_a": "Update",
+      "option_b": "Delete",
+      "option_c": "None",
+      "option_d": "Code",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 96,
+    "fields": {
+      "question": "Prototyping:",
+      "option_a": "Model",
+      "option_b": "Code",
+      "option_c": "None",
+      "option_d": "DB",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 97,
+    "fields": {
+      "question": "Spiral model:",
+      "option_a": "Risk based",
+      "option_b": "Linear",
+      "option_c": "None",
+      "option_d": "Fast",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 98,
+    "fields": {
+      "question": "Verification:",
+      "option_a": "Correct build",
+      "option_b": "Test",
+      "option_c": "None",
+      "option_d": "Run",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 99,
+    "fields": {
+      "question": "Validation:",
+      "option_a": "Right product",
+      "option_b": "Code",
+      "option_c": "None",
+      "option_d": "Run",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 100,
+    "fields": {
+      "question": "Deployment:",
+      "option_a": "Release",
+      "option_b": "Delete",
+      "option_c": "None",
+      "option_d": "Stop",
+      "correct_index": 0,
+      "subject": "software_engineering",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 101,
+    "fields": {
+      "question": "DAA is:",
+      "option_a": "Algo design",
+      "option_b": "DB",
+      "option_c": "OS",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 102,
+    "fields": {
+      "question": "Time complexity:",
+      "option_a": "Time",
+      "option_b": "Mem",
+      "option_c": "Code",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 103,
+    "fields": {
+      "question": "Binary search:",
+      "option_a": "O(n)",
+      "option_b": "O(log n)",
+      "option_c": "O(n2)",
+      "option_d": "O(1)",
+      "correct_index": 1,
+      "subject": "daa",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 104,
+    "fields": {
+      "question": "Linear search:",
+      "option_a": "O(n)",
+      "option_b": "O(log n)",
+      "option_c": "O(1)",
+      "option_d": "O(n2)",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 105,
+    "fields": {
+      "question": "Merge sort:",
+      "option_a": "O(n log n)",
+      "option_b": "O(n2)",
+      "option_c": "O(n)",
+      "option_d": "O(log n)",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 106,
+    "fields": {
+      "question": "Quick sort avg:",
+      "option_a": "O(n log n)",
+      "option_b": "O(n2)",
+      "option_c": "O(n)",
+      "option_d": "O(1)",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 107,
+    "fields": {
+      "question": "Worst quick sort:",
+      "option_a": "O(n log n)",
+      "option_b": "O(n2)",
+      "option_c": "O(n)",
+      "option_d": "O(1)",
+      "correct_index": 1,
+      "subject": "daa",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 108,
+    "fields": {
+      "question": "Greedy uses:",
+      "option_a": "Local opt",
+      "option_b": "Global",
+      "option_c": "Random",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 109,
+    "fields": {
+      "question": "DP uses:",
+      "option_a": "Overlap",
+      "option_b": "Random",
+      "option_c": "None",
+      "option_d": "Greedy",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 110,
+    "fields": {
+      "question": "Recursion is:",
+      "option_a": "Self call",
+      "option_b": "Loop",
+      "option_c": "None",
+      "option_d": "Code",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 111,
+    "fields": {
+      "question": "Stack used in:",
+      "option_a": "Recursion",
+      "option_b": "Loop",
+      "option_c": "None",
+      "option_d": "Sort",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 112,
+    "fields": {
+      "question": "Heap is:",
+      "option_a": "Tree",
+      "option_b": "Graph",
+      "option_c": "Array",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 113,
+    "fields": {
+      "question": "Graph is:",
+      "option_a": "Nodes+edges",
+      "option_b": "Array",
+      "option_c": "None",
+      "option_d": "Tree",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 114,
+    "fields": {
+      "question": "BFS uses:",
+      "option_a": "Queue",
+      "option_b": "Stack",
+      "option_c": "None",
+      "option_d": "Heap",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 115,
+    "fields": {
+      "question": "DFS uses:",
+      "option_a": "Stack",
+      "option_b": "Queue",
+      "option_c": "None",
+      "option_d": "Heap",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 116,
+    "fields": {
+      "question": "Dijkstra finds:",
+      "option_a": "Shortest path",
+      "option_b": "Sort",
+      "option_c": "None",
+      "option_d": "Search",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 117,
+    "fields": {
+      "question": "Prim algo:",
+      "option_a": "MST",
+      "option_b": "Path",
+      "option_c": "None",
+      "option_d": "Sort",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 118,
+    "fields": {
+      "question": "Kruskal:",
+      "option_a": "MST",
+      "option_b": "Path",
+      "option_c": "None",
+      "option_d": "Sort",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 119,
+    "fields": {
+      "question": "NP complete:",
+      "option_a": "Hard",
+      "option_b": "Easy",
+      "option_c": "None",
+      "option_d": "Fast",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 120,
+    "fields": {
+      "question": "Big O:",
+      "option_a": "Worst",
+      "option_b": "Best",
+      "option_c": "Avg",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 121,
+    "fields": {
+      "question": "Big Omega:",
+      "option_a": "Best",
+      "option_b": "Worst",
+      "option_c": "Avg",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 122,
+    "fields": {
+      "question": "Big Theta:",
+      "option_a": "Tight",
+      "option_b": "Worst",
+      "option_c": "Best",
+      "option_d": "None",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 123,
+    "fields": {
+      "question": "Divide conquer:",
+      "option_a": "Split",
+      "option_b": "Merge",
+      "option_c": "None",
+      "option_d": "Sort",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "medium"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 124,
+    "fields": {
+      "question": "Backtracking:",
+      "option_a": "Try all",
+      "option_b": "Greedy",
+      "option_c": "None",
+      "option_d": "Sort",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "easy"
+    }
+  },
+  {
+    "model": "quiz.question",
+    "pk": 125,
+    "fields": {
+      "question": "Branch bound:",
+      "option_a": "Optimization",
+      "option_b": "Sort",
+      "option_c": "None",
+      "option_d": "Search",
+      "correct_index": 0,
+      "subject": "daa",
+      "difficulty": "hard"
+    }
+  }
+]

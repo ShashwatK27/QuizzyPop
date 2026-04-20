@@ -1,0 +1,198 @@
+{% extends "quiz/base.html" %}
+{% block title %}QuizzyPop - Player Profile{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+
+    .container {
+        max-width: 900px; width: 100%; margin: 0 auto;
+        display: flex; flex-direction: column;
+    }
+
+    header { text-align: center; margin-bottom: 2rem; }
+    .secondary-tagline { font-size: 2rem; margin-top: 0.8rem; color: var(--highlight); font-weight: bold; text-shadow: 0 0 10px var(--highlight); }
+
+    .profile-card {
+        background-color: var(--secondary); padding: 2rem;
+        border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        margin-bottom: 2rem; text-align: center;
+    }
+
+    .stats-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .stat-box {
+        background-color: var(--accent); padding: 1.5rem; border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .stat-box h4 { margin: 0; font-size: 1rem; color: var(--text); opacity: 0.8; }
+    .stat-box .value { font-size: 2rem; font-weight: bold; color: var(--highlight); text-shadow: 0 0 5px var(--highlight); margin-top: 10px; }
+
+    .charts-container {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+        .charts-container { grid-template-columns: 1fr; }
+    }
+
+    .chart-card {
+        background-color: var(--secondary); padding: 1.5rem;
+        border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        display: flex; flex-direction: column; align-items: center;
+    }
+    .chart-card h3 { color: white; margin-bottom: 1rem; }
+    
+    .nav-btns { margin-top: 2rem; text-align: center; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <div class="secondary-tagline" id="username-display">Player Profile</div>
+    </header>
+
+    <div class="profile-card">
+        <h3>Your QuizzyPop Performance</h3>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <h4>Total Games</h4>
+                <div class="value" id="stat-games">0</div>
+            </div>
+            <div class="stat-box">
+                <h4>Average Score</h4>
+                <div class="value" id="stat-avg">0</div>
+            </div>
+            <div class="stat-box">
+                <h4>Highest Score</h4>
+                <div class="value" id="stat-best">0</div>
+            </div>
+            <div class="stat-box">
+                <h4>Weakest Subject</h4>
+                <div class="value" id="stat-weakest" style="font-size: 1.2rem; margin-top: 15px;">-</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-container">
+        <div class="chart-card">
+            <h3>Subject Mastery (Accuracy %)</h3>
+            <canvas id="radarChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3>Recent Score Trend</h3>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+
+    <div class="nav-btns">
+        <a href="{% url 'index' %}" class="btn">Back to Dashboard</a>
+    </div>
+</div>
+
+<script>
+    const token = localStorage.getItem('access_token');
+    const username = localStorage.getItem('username');
+    if (!token) { window.location.href = "{% url 'login' %}"; }
+
+    document.getElementById('username-display').innerText = `${username}'s Profile`;
+
+    async function fetchAnalytics() {
+        try {
+            const res = await fetch('/api/v1/analytics/', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.status === 401) { window.location.href = "{% url 'login' %}"; }
+            const data = await res.json();
+            
+            document.getElementById('stat-games').innerText = data.total_games;
+            document.getElementById('stat-avg').innerText = data.average_score;
+            document.getElementById('stat-best').innerText = data.best_score;
+            if(data.weakest_subject) {
+                document.getElementById('stat-weakest').innerText = data.weakest_subject.replace('_', ' ').toUpperCase();
+            }
+
+            renderCharts(data);
+        } catch (e) {
+            console.error("Error fetching analytics", e);
+        }
+    }
+
+    function renderCharts(data) {
+        // Radar Chart for Subject Performance
+        const radarCtx = document.getElementById('radarChart').getContext('2d');
+        const subjects = Object.keys(data.subject_performance || {}).map(s => s.replace('_', ' ').toUpperCase());
+        const accuracies = Object.values(data.subject_performance || {});
+        
+        new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: subjects.length ? subjects : ['No Data'],
+                datasets: [{
+                    label: 'Accuracy %',
+                    data: accuracies.length ? accuracies : [0],
+                    backgroundColor: 'rgba(233, 69, 96, 0.4)',
+                    borderColor: '#e94560',
+                    pointBackgroundColor: '#e94560',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255,255,255,0.2)' },
+                        grid: { color: 'rgba(255,255,255,0.2)' },
+                        pointLabels: { color: '#fff', font: { size: 12 } },
+                        ticks: { backdropColor: 'transparent', color: '#aaa', min: 0, max: 100 }
+                    }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Line Chart for Recent Trends
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        const trendData = data.recent_trend || [];
+        
+        new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: trendData.map((_, i) => `Game ${i+1}`),
+                datasets: [{
+                    label: 'Score',
+                    data: trendData.map(t => t.score),
+                    borderColor: '#4caf50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                    fill: true,
+                    tension: 0.3,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: '#fff' }, beginAtZero: true }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const item = trendData[context.dataIndex];
+                                return `Score: ${item.score} (${item.subject})`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    fetchAnalytics();
+</script>
+{% endblock %}

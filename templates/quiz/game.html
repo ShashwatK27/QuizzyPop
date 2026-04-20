@@ -1,0 +1,420 @@
+{% extends "quiz/base.html" %}
+{% block title %}QuizzyPop - Game{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        display: flex; flex-direction: column; align-items: center; padding: 20px;
+    }
+
+    .quiz-container {
+        background: var(--secondary); border-radius: 12px;
+        max-width: 500px; width: 100%; padding: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+
+    .question { font-size: 1.2rem; margin-bottom: 15px; color: var(--highlight); }
+
+    .options { display: flex; flex-direction: column; gap: 10px; }
+
+    .option {
+        background-color: var(--accent); color: var(--text);
+        padding: 12px; border-radius: 6px; cursor: pointer; transition: 0.2s;
+    }
+    .option:hover { background-color: var(--highlight); }
+    .option.selected { background-color: var(--highlight); color: white; }
+    .option.correct { background-color: #4caf50; color: white; }
+    .option.incorrect { background-color: #f44336; color: white; animation: shake 0.5s; }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .score, .progress, .difficulty { margin-top: 15px; font-size: 1rem; }
+
+    .controls { margin-top: 20px; display: flex; justify-content: space-between; }
+    .controls button {
+        padding: 10px 20px; border: none; background-color: var(--highlight);
+        color: white; border-radius: 50px; cursor: pointer; font-weight: bold;
+        font-size: 1rem; box-shadow: 0 4px 15px rgba(233,69,96,0.4); transition: all 0.3s ease;
+    }
+    .controls button:hover {
+        background-color: #d03a52; transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(233,69,96,0.6);
+    }
+    .controls button:disabled { background-color: #888; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .toast {
+        position: fixed; bottom: 20px;
+        background-color: var(--secondary); color: white;
+        padding: 10px 20px; border-radius: 8px; opacity: 0; transition: opacity 0.3s ease;
+    }
+    .toast.show { opacity: 1; }
+
+    .game-over { display: none; text-align: center; background: var(--secondary); padding: 30px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3); width: 100%; max-width: 500px; }
+    .game-over h2 { margin-bottom: 20px; color: var(--highlight); }
+    .stat-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1.1rem; border-bottom: 1px solid var(--accent); padding-bottom: 5px; }
+    .stat-row strong { color: var(--highlight); }
+    .game-over .btn-row { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; }
+
+    .progress-bar {
+        width: 100%; height: 8px; background: #444;
+        margin: 10px 0; border-radius: 4px; overflow: hidden;
+    }
+    .progress-bar .fill { height: 100%; background: var(--highlight); width: 0; transition: width 0.3s; }
+
+    .timer { height: 8px; background: #333; margin: 10px 0; border-radius: 4px; overflow: hidden; }
+    .timer .fill { height: 100%; background: var(--accent); width: 100%; transition: width 1s linear; }
+    
+    .difficulty-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; margin-left: 10px; text-transform: uppercase; }
+    .diff-easy { background: #4caf50; color: white; }
+    .diff-medium { background: #ff9800; color: white; }
+    .diff-hard { background: #f44336; color: white; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="quiz-container" id="quiz-container">
+    <div class="question">
+        <span id="question">Loading...</span>
+        <span id="q-difficulty" class="difficulty-badge"></span>
+    </div>
+    <div class="options" id="options"></div>
+    <div class="score">Score: <span id="score">0</span></div>
+    <div class="difficulty">Subject: <strong id="subject-label" style="color: var(--highlight);">Loading...</strong></div>
+    <div class="progress-bar"><div class="fill" id="progress"></div></div>
+    <div class="timer"><div class="fill" id="timer-progress"></div></div>
+    <div class="controls">
+        <button id="skip">Skip</button>
+        <button id="next" disabled>Next</button>
+    </div>
+</div>
+
+<div class="game-over" id="game-over">
+    <h2>Game Over!</h2>
+    <div class="stat-row"><span>Final Score:</span> <strong id="final-score"></strong></div>
+    <div class="stat-row"><span>Accuracy:</span> <strong id="final-accuracy"></strong></div>
+    <div class="stat-row"><span>Correct Answers:</span> <strong id="final-correct"></strong></div>
+    <div class="stat-row"><span>Time Taken:</span> <strong id="final-time"></strong></div>
+    <div class="stat-row"><span>Highest Streak:</span> <strong id="final-streak"></strong></div>
+    <div class="btn-row">
+        <button id="restart" class="btn" style="border:none">Play Again</button>
+        <a href="{% url 'index' %}" class="btn" style="background:#444;">Home</a>
+    </div>
+</div>
+
+<!-- AI Tutor Modal -->
+<div id="ai-tutor-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:var(--secondary); padding:2rem; border-radius:12px; max-width:400px; width:90%; border:1px solid var(--highlight); text-align:center;">
+        <h3 style="color:var(--highlight); margin-top:0;">🤖 AI Tutor</h3>
+        <p id="tutor-msg" style="font-size:1.1rem; line-height:1.5;"></p>
+        <button onclick="document.getElementById('ai-tutor-modal').style.display='none'" class="btn" style="margin-top:1rem;">Got it!</button>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    const token = localStorage.getItem('access_token');
+    if (!token) { window.location.href = "{% url 'login' %}"; }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const questionElement     = document.getElementById("question");
+        const optionsElement      = document.getElementById("options");
+        const scoreElement        = document.getElementById("score");
+        const nextButton          = document.getElementById("next");
+        const skipButton          = document.getElementById("skip");
+        const progressElement     = document.getElementById("progress");
+        const timerProgressElement= document.getElementById("timer-progress");
+        const toast               = document.getElementById("toast");
+        const quizContainer       = document.getElementById("quiz-container");
+        const gameOverContainer   = document.getElementById("game-over");
+        const restartButton       = document.getElementById("restart");
+        const difficultyBadge     = document.getElementById("q-difficulty");
+        const tutorModal          = document.getElementById("ai-tutor-modal");
+        const tutorMsg            = document.getElementById("tutor-msg");
+
+        let questionPool = { easy: [], medium: [], hard: [] };
+
+        const quizConfig = {
+            totalQuestions: 10,
+            timePerQuestion: 15,
+            points: { easy: 5, medium: 10, hard: 15 }
+        };
+
+        const toastMessages = {
+            correct:   ["Nice!", "Great job!", "Correct!", "Nailed it!"],
+            incorrect: ["Oops!", "Not quite.", "Try again!"],
+            timeUp:    ["Out of time!", "Too slow!", "Next time!"],
+        };
+
+        const state = {
+            currentQuestion: 0, score: 0,
+            questionsAnswered: 0, selectedOptionIndex: null,
+            timer: null, timeLeft: quizConfig.timePerQuestion,
+            currentQuestionObj: null,
+            isTransitioning: false,
+            correctCount: 0,
+            startTime: 0,
+            currentDifficulty: 'medium',
+            streak: 0,
+            highestStreak: 0
+        };
+
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 2000);
+        }
+        
+        function showTutor(msg) {
+            tutorMsg.textContent = msg;
+            tutorModal.style.display = 'flex';
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const subjectParam = urlParams.get('subject') || 'machine_learning';
+        
+        const subjectLabels = {
+            'machine_learning': 'Machine Learning',
+            'operating_systems': 'Operating Systems',
+            'dbms': 'DBMS',
+            'software_engineering': 'Software Engineering',
+            'daa': 'DAA'
+        };
+
+        document.getElementById("subject-label").textContent = subjectLabels[subjectParam] || subjectParam;
+
+        function initQuiz() {
+            fetch(`/api/v1/questions/?subject=${subjectParam}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+            .then(res => {
+                if (res.status === 401) { window.location.href = "{% url 'login' %}"; }
+                return res.json();
+            })
+            .then(data => {
+                const allQs = data[subjectParam] || [];
+                if(allQs.length === 0) {
+                    questionElement.textContent = "Error: No questions found for this subject.";
+                    return;
+                }
+                
+                // Sort into pools
+                questionPool = { easy: [], medium: [], hard: [] };
+                allQs.forEach(q => {
+                    const d = q.difficulty || 'medium';
+                    if (questionPool[d]) questionPool[d].push(q);
+                    else questionPool['medium'].push(q);
+                });
+
+                state.currentQuestion = 0;
+                state.score = 0; state.questionsAnswered = 0; state.correctCount = 0;
+                state.streak = 0; state.highestStreak = 0;
+                state.selectedOptionIndex = null;
+                state.currentDifficulty = 'medium';
+                state.startTime = Date.now();
+                nextButton.disabled = true;
+                gameOverContainer.style.display = 'none';
+                quizContainer.style.display = 'block';
+                tutorModal.style.display = 'none';
+                updateUI(); loadQuestion();
+            });
+        }
+
+        function getAdaptiveQuestion(preferredDiff) {
+            // Try preferred, fallback to others if empty
+            if (questionPool[preferredDiff].length > 0) return questionPool[preferredDiff].pop();
+            const fallbacks = ['medium', 'easy', 'hard'].filter(d => d !== preferredDiff);
+            for (let f of fallbacks) {
+                if (questionPool[f].length > 0) return questionPool[f].pop();
+            }
+            return null; // Empty pool
+        }
+
+        function loadQuestion() {
+            state.currentQuestionObj = getAdaptiveQuestion(state.currentDifficulty);
+            if (!state.currentQuestionObj) return endQuiz(); // Out of questions
+            
+            const q = state.currentQuestionObj;
+            questionElement.textContent = q.question;
+            
+            // Handle difficulty badge
+            difficultyBadge.textContent = q.difficulty || state.currentDifficulty;
+            difficultyBadge.className = `difficulty-badge diff-${q.difficulty || state.currentDifficulty}`;
+
+            optionsElement.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.textContent = opt;
+                div.dataset.index = i;
+                div.addEventListener('click', () => selectOption(i, div));
+                optionsElement.appendChild(div);
+            });
+            nextButton.disabled = true;
+            skipButton.disabled = false;
+            state.selectedOptionIndex = null;
+            state.isTransitioning = false;
+            resetTimer();
+        }
+
+        function selectOption(index, element) {
+            if (state.isTransitioning) return;
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            state.selectedOptionIndex = index;
+            nextButton.disabled = false;
+        }
+
+        function submitAnswer() {
+            if (state.isTransitioning) return;
+            const q = state.currentQuestionObj;
+            const selected = state.selectedOptionIndex;
+            const allOptions = document.querySelectorAll('.option');
+            if (selected === null) return;
+            
+            state.isTransitioning = true;
+            nextButton.disabled = true;
+            skipButton.disabled = true;
+            clearInterval(state.timer);
+
+            const isCorrect = selected === q.correct_index;
+            if (isCorrect) {
+                allOptions[selected].classList.add('correct');
+                state.streak++;
+                if (state.streak > state.highestStreak) state.highestStreak = state.streak;
+                
+                // Adaptive Logic & Weighted Scoring
+                const diff = q.difficulty || 'medium';
+                let ptsEarned = quizConfig.points[diff] || 10;
+                
+                // Streak bonus
+                if (state.streak >= 3) ptsEarned += 5;
+
+                state.score += ptsEarned;
+                state.correctCount++;
+                state.currentDifficulty = 'hard'; // Level up
+                showToast(getRandom('correct') + ` +${ptsEarned}pts`);
+            } else {
+                allOptions[selected].classList.add('incorrect');
+                if(allOptions[q.correct_index]) allOptions[q.correct_index].classList.add('correct');
+                state.streak = 0;
+                state.currentDifficulty = 'easy'; // Level down
+                
+                // AI Tutor Explanation
+                let explanation = q.explanation;
+                if (!explanation) {
+                    explanation = `The correct answer was "${q.options[q.correct_index]}". Keep practicing this topic to improve!`;
+                }
+                showTutor(explanation);
+            }
+
+            state.questionsAnswered++;
+            updateProgressBar();
+            scoreElement.textContent = state.score;
+
+            setTimeout(() => {
+                if (state.questionsAnswered >= quizConfig.totalQuestions) {
+                    endQuiz();
+                } else {
+                    state.currentQuestion++;
+                    loadQuestion();
+                }
+            }, 1500);
+        }
+
+        function skipQuestion() {
+            if (state.isTransitioning) return;
+            state.isTransitioning = true;
+            nextButton.disabled = true;
+            skipButton.disabled = true;
+            clearInterval(state.timer);
+            showToast(getRandom('timeUp'));
+            
+            // Show correct answer if skipped
+            const allOptions = document.querySelectorAll('.option');
+            const q = state.currentQuestionObj;
+            if(allOptions[q.correct_index]) allOptions[q.correct_index].classList.add('correct');
+
+            state.streak = 0;
+            state.currentDifficulty = 'easy';
+            state.questionsAnswered++;
+            state.currentQuestion++;
+            updateProgressBar();
+
+            setTimeout(() => {
+                if (state.questionsAnswered >= quizConfig.totalQuestions) {
+                    endQuiz();
+                } else {
+                    loadQuestion();
+                }
+            }, 1000);
+        }
+
+        function endQuiz() {
+            quizContainer.style.display = 'none';
+            gameOverContainer.style.display = 'block';
+            clearInterval(state.timer);
+
+            const totalTimeTaken = Math.floor((Date.now() - state.startTime) / 1000);
+            const accuracy = state.questionsAnswered > 0 ? (state.correctCount / state.questionsAnswered) * 100 : 0;
+
+            document.getElementById("final-score").textContent = state.score;
+            document.getElementById("final-correct").textContent = `${state.correctCount} / ${state.questionsAnswered}`;
+            document.getElementById("final-accuracy").textContent = accuracy.toFixed(2) + '%';
+            document.getElementById("final-time").textContent = totalTimeTaken + 's';
+            document.getElementById("final-streak").textContent = state.highestStreak;
+
+            fetch('/api/v1/submit_score/', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    score: state.score,
+                    subject: subjectParam,
+                    time_taken: totalTimeTaken,
+                    accuracy: accuracy
+                })
+            });
+        }
+
+        function updateUI() {
+            scoreElement.textContent = state.score;
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            progressElement.style.width = `${(state.questionsAnswered / quizConfig.totalQuestions) * 100}%`;
+        }
+
+        function resetTimer() {
+            clearInterval(state.timer);
+            state.timeLeft = quizConfig.timePerQuestion;
+            timerProgressElement.style.width = '100%';
+            state.timer = setInterval(() => {
+                state.timeLeft--;
+                timerProgressElement.style.width = `${(state.timeLeft / quizConfig.timePerQuestion) * 100}%`;
+                if (state.timeLeft <= 0) { clearInterval(state.timer); skipQuestion(); }
+            }, 1000);
+        }
+
+        function getRandom(type) {
+            const msgs = toastMessages[type];
+            return msgs[Math.floor(Math.random() * msgs.length)];
+        }
+
+        nextButton.addEventListener('click', submitAnswer);
+        skipButton.addEventListener('click', skipQuestion);
+        restartButton.addEventListener('click', initQuiz);
+        
+        initQuiz();
+    });
+</script>
+{% endblock %}

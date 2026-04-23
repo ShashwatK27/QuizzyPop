@@ -36,17 +36,20 @@
 
     .score, .progress, .difficulty { margin-top: 15px; font-size: 1rem; }
 
-    .controls { margin-top: 20px; display: flex; justify-content: space-between; }
+    .controls { margin-top: 20px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
     .controls button {
         padding: 10px 20px; border: none; background-color: var(--highlight);
         color: white; border-radius: 50px; cursor: pointer; font-weight: bold;
         font-size: 1rem; box-shadow: 0 4px 15px rgba(233,69,96,0.4); transition: all 0.3s ease;
+        flex: 1 1 120px;
     }
     .controls button:hover {
         background-color: #d03a52; transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(233,69,96,0.6);
     }
     .controls button:disabled { background-color: #888; cursor: not-allowed; transform: none; box-shadow: none; }
+    .controls #end-quiz { background: #5a2430; box-shadow: 0 4px 15px rgba(90,36,48,0.35); }
+    .controls #end-quiz:hover { background: #742d3b; box-shadow: 0 8px 20px rgba(90,36,48,0.55); }
 
     .toast {
         position: fixed; bottom: 20px;
@@ -90,6 +93,7 @@
     <div class="timer"><div class="fill" id="timer-progress"></div></div>
     <div class="controls">
         <button id="skip">Skip</button>
+        <button id="end-quiz">End Quiz</button>
         <button id="next" disabled>Next</button>
     </div>
 </div>
@@ -128,6 +132,7 @@
         const scoreElement        = document.getElementById("score");
         const nextButton          = document.getElementById("next");
         const skipButton          = document.getElementById("skip");
+        const endQuizButton       = document.getElementById("end-quiz");
         const progressElement     = document.getElementById("progress");
         const timerProgressElement= document.getElementById("timer-progress");
         const toast               = document.getElementById("toast");
@@ -176,9 +181,6 @@
             tutorModal.style.display = 'flex';
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const subjectParam = urlParams.get('subject') || 'machine_learning';
-        
         const subjectLabels = {
             'machine_learning': 'Machine Learning',
             'operating_systems': 'Operating Systems',
@@ -187,10 +189,34 @@
             'daa': 'DAA'
         };
 
+        const subjectAliases = {
+            'ml': 'machine_learning',
+            'machinelearning': 'machine_learning',
+            'machine_learning': 'machine_learning',
+            'operating_system': 'operating_systems',
+            'operating_systems': 'operating_systems',
+            'os': 'operating_systems',
+            'dbms': 'dbms',
+            'database_management_system': 'dbms',
+            'software_engineering': 'software_engineering',
+            'se': 'software_engineering',
+            'daa': 'daa',
+            'algorithms': 'daa'
+        };
+
+        function normalizeSubject(value) {
+            const normalized = (value || 'machine_learning').trim().toLowerCase().replace(/[-\s]+/g, '_');
+            return subjectAliases[normalized] || normalized;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const rawSubjectParam = urlParams.get('subject') || 'machine_learning';
+        const subjectParam = normalizeSubject(rawSubjectParam);
+
         document.getElementById("subject-label").textContent = subjectLabels[subjectParam] || subjectParam;
 
         function initQuiz() {
-            fetch(`/api/v1/questions/?subject=${subjectParam}`, {
+            fetch(`/api/v1/questions/?subject=${encodeURIComponent(subjectParam)}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
             .then(res => {
@@ -198,7 +224,7 @@
                 return res.json();
             })
             .then(data => {
-                const allQs = data[subjectParam] || [];
+                const allQs = data.questions || data[subjectParam] || data[rawSubjectParam] || [];
                 if(allQs.length === 0) {
                     questionElement.textContent = "Error: No questions found for this subject.";
                     return;
@@ -219,6 +245,8 @@
                 state.currentDifficulty = 'medium';
                 state.startTime = Date.now();
                 nextButton.disabled = true;
+                skipButton.disabled = false;
+                endQuizButton.disabled = false;
                 gameOverContainer.style.display = 'none';
                 quizContainer.style.display = 'block';
                 tutorModal.style.display = 'none';
@@ -258,6 +286,7 @@
             });
             nextButton.disabled = true;
             skipButton.disabled = false;
+            endQuizButton.disabled = false;
             state.selectedOptionIndex = null;
             state.isTransitioning = false;
             resetTimer();
@@ -281,6 +310,7 @@
             state.isTransitioning = true;
             nextButton.disabled = true;
             skipButton.disabled = true;
+            endQuizButton.disabled = true;
             clearInterval(state.timer);
 
             const isCorrect = selected === q.correct_index;
@@ -333,6 +363,7 @@
             state.isTransitioning = true;
             nextButton.disabled = true;
             skipButton.disabled = true;
+            endQuizButton.disabled = true;
             clearInterval(state.timer);
             showToast(getRandom('timeUp'));
             
@@ -356,16 +387,31 @@
             }, 1000);
         }
 
-        function endQuiz() {
+        function terminateQuiz() {
+            if (state.isTransitioning) return;
+            if (!confirm("End quiz now? Unanswered questions will be counted as wrong.")) return;
+
+            state.isTransitioning = true;
+            endQuiz(true);
+        }
+
+        function endQuiz(countUnansweredWrong = false) {
+            if (countUnansweredWrong) {
+                state.questionsAnswered = quizConfig.totalQuestions;
+                updateProgressBar();
+            }
+
             quizContainer.style.display = 'none';
             gameOverContainer.style.display = 'block';
+            tutorModal.style.display = 'none';
             clearInterval(state.timer);
 
             const totalTimeTaken = Math.floor((Date.now() - state.startTime) / 1000);
-            const accuracy = state.questionsAnswered > 0 ? (state.correctCount / state.questionsAnswered) * 100 : 0;
+            const attemptedCount = countUnansweredWrong ? quizConfig.totalQuestions : state.questionsAnswered;
+            const accuracy = attemptedCount > 0 ? (state.correctCount / attemptedCount) * 100 : 0;
 
             document.getElementById("final-score").textContent = state.score;
-            document.getElementById("final-correct").textContent = `${state.correctCount} / ${state.questionsAnswered}`;
+            document.getElementById("final-correct").textContent = `${state.correctCount} / ${attemptedCount}`;
             document.getElementById("final-accuracy").textContent = accuracy.toFixed(2) + '%';
             document.getElementById("final-time").textContent = totalTimeTaken + 's';
             document.getElementById("final-streak").textContent = state.highestStreak;
@@ -412,6 +458,7 @@
 
         nextButton.addEventListener('click', submitAnswer);
         skipButton.addEventListener('click', skipQuestion);
+        endQuizButton.addEventListener('click', terminateQuiz);
         restartButton.addEventListener('click', initQuiz);
         
         initQuiz();

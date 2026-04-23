@@ -8,6 +8,34 @@ import random
 from .models import Question, Score
 from .serializers import QuestionSerializer, ScoreSerializer, UserSerializer
 
+SUBJECT_LABELS = dict(Question.SUBJECT_CHOICES)
+SUBJECT_ALIASES = {
+    key: key for key in SUBJECT_LABELS
+}
+SUBJECT_ALIASES.update({
+    label.lower().replace(' ', '_'): key
+    for key, label in SUBJECT_LABELS.items()
+})
+SUBJECT_ALIASES.update({
+    'ml': 'machine_learning',
+    'machinelearning': 'machine_learning',
+    'os': 'operating_systems',
+    'operating_system': 'operating_systems',
+    'database_management_system': 'dbms',
+    'se': 'software_engineering',
+    'software_engineer': 'software_engineering',
+    'algorithms': 'daa',
+})
+
+
+def normalize_subject(value, default=None):
+    if value is None or value == '':
+        return default
+
+    normalized = str(value).strip().lower().replace('-', '_').replace(' ', '_')
+    return SUBJECT_ALIASES.get(normalized)
+
+
 class RegisterAPIView(APIView):
     permission_classes = [AllowAny]
 
@@ -28,13 +56,19 @@ class QuestionBatchAPIView(APIView):
     permission_classes = [IsAuthenticated]
     
     def get(self, request):
-        subject = request.query_params.get('subject', 'machine_learning')
+        subject = normalize_subject(request.query_params.get('subject'), default='machine_learning')
+        if not subject:
+            return Response(
+                {
+                    "error": "Invalid subject.",
+                    "available_subjects": list(SUBJECT_LABELS.keys()),
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         
-        # Get questions for the subject
+        # Return only questions for the requested subject. Do not fall back to all
+        # subjects, because that mixes categories in the quiz UI.
         qs = list(Question.objects.filter(subject=subject))
-        
-        if not qs:
-            qs = list(Question.objects.all())
             
         random.shuffle(qs)
         
@@ -42,13 +76,29 @@ class QuestionBatchAPIView(APIView):
         qs = qs[:50]
         
         serializer = QuestionSerializer(qs, many=True)
-        return Response({subject: serializer.data})
+        return Response({
+            "subject": subject,
+            "questions": serializer.data,
+            subject: serializer.data,
+        })
 
 class SubmitScoreAPIView(APIView):
     permission_classes = [IsAuthenticated]
     
     def post(self, request):
-        serializer = ScoreSerializer(data=request.data)
+        data = request.data.copy()
+        subject = normalize_subject(data.get('subject'))
+        if not subject:
+            return Response(
+                {
+                    "subject": ["Invalid subject."],
+                    "available_subjects": list(SUBJECT_LABELS.keys()),
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        data['subject'] = subject
+        serializer = ScoreSerializer(data=data)
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -61,9 +111,18 @@ class LeaderboardAPIView(APIView):
         subject = request.query_params.get('subject')
         
         if subject:
-            scores = Score.objects.filter(subject=subject).order_by('-score', 'time_taken')[:20]
+            subject = normalize_subject(subject)
+            if not subject:
+                return Response(
+                    {
+                        "error": "Invalid subject.",
+                        "available_subjects": list(SUBJECT_LABELS.keys()),
+                    },
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            scores = Score.objects.filter(subject=subject).order_by('-score', 'time_taken')[:10]
         else:
-            scores = Score.objects.all().order_by('-score', 'time_taken')[:20]
+            scores = Score.objects.all().order_by('-score', 'time_taken')[:10]
             
         serializer = ScoreSerializer(scores, many=True)
         return Response(serializer.data)

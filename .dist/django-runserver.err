@@ -41,3 +41,7 @@ Unauthorized: /api/v1/leaderboard/
 [23/Apr/2026 18:59:57,952] - Broken pipe from ('127.0.0.1', 54417)
 [23/Apr/2026 19:00:27] "GET / HTTP/1.1" 200 10807
 [23/Apr/2026 19:00:28] "GET /api/v1/leaderboard/ HTTP/1.1" 200 1549
+[23/Apr/2026 19:19:18] "GET /game/?subject=machine_learning&test=true HTTP/1.1" 200 22857
+[23/Apr/2026 19:19:18] "GET / HTTP/1.1" 200 10807
+[23/Apr/2026 19:19:18,840] - Broken pipe from ('127.0.0.1', 61195)
+[23/Apr/2026 19:19:18,846] - Broken pipe from ('127.0.0.1', 61194)

@@ -144,6 +144,7 @@
         const tutorMsg            = document.getElementById("tutor-msg");
 
         let questionPool = { easy: [], medium: [], hard: [] };
+        let testQuestionQueue = [];
 
         const quizConfig = {
             totalQuestions: 10,
@@ -212,11 +213,17 @@
         const urlParams = new URLSearchParams(window.location.search);
         const rawSubjectParam = urlParams.get('subject') || 'machine_learning';
         const subjectParam = normalizeSubject(rawSubjectParam);
+        const isTestMode = (urlParams.get('test') || '').toLowerCase() === 'true';
 
         document.getElementById("subject-label").textContent = subjectLabels[subjectParam] || subjectParam;
 
         function initQuiz() {
-            fetch(`/api/v1/questions/?subject=${encodeURIComponent(subjectParam)}`, {
+            const questionParams = new URLSearchParams({ subject: subjectParam });
+            if (isTestMode) {
+                questionParams.set('test', 'true');
+            }
+
+            fetch(`/api/v1/questions/?${questionParams.toString()}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
             .then(res => {
@@ -230,13 +237,18 @@
                     return;
                 }
                 
-                // Sort into pools
+                // Test mode keeps the exact API order for stable automation runs.
+                testQuestionQueue = isTestMode ? allQs.slice() : [];
+
+                // Normal mode keeps the existing adaptive random-question behavior.
                 questionPool = { easy: [], medium: [], hard: [] };
-                allQs.forEach(q => {
-                    const d = q.difficulty || 'medium';
-                    if (questionPool[d]) questionPool[d].push(q);
-                    else questionPool['medium'].push(q);
-                });
+                if (!isTestMode) {
+                    allQs.forEach(q => {
+                        const d = q.difficulty || 'medium';
+                        if (questionPool[d]) questionPool[d].push(q);
+                        else questionPool['medium'].push(q);
+                    });
+                }
 
                 state.currentQuestion = 0;
                 state.score = 0; state.questionsAnswered = 0; state.correctCount = 0;
@@ -255,6 +267,10 @@
         }
 
         function getAdaptiveQuestion(preferredDiff) {
+            if (isTestMode) {
+                return testQuestionQueue.shift() || null;
+            }
+
             // Try preferred, fallback to others if empty
             if (questionPool[preferredDiff].length > 0) return questionPool[preferredDiff].pop();
             const fallbacks = ['medium', 'easy', 'hard'].filter(d => d !== preferredDiff);

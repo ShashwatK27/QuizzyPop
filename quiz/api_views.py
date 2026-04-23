@@ -27,6 +27,101 @@ SUBJECT_ALIASES.update({
     'algorithms': 'daa',
 })
 
+# Fixed API dataset for automation suites such as Katalon.
+# This path is used only when the URL includes ?test=true.
+TEST_MODE_QUESTIONS = [
+    {
+        "id": "test-1",
+        "question": "TEST MODE: Which data structure uses FIFO order?",
+        "options": ["Stack", "Queue", "Tree", "Graph"],
+        "correct_index": 1,
+        "difficulty": "easy",
+        "topic": "Automation Test",
+        "explanation": "A queue follows First In, First Out order.",
+    },
+    {
+        "id": "test-2",
+        "question": "TEST MODE: What does CPU stand for?",
+        "options": ["Central Process Unit", "Central Processing Unit", "Computer Personal Unit", "Core Processing Utility"],
+        "correct_index": 1,
+        "difficulty": "easy",
+        "topic": "Automation Test",
+        "explanation": "CPU stands for Central Processing Unit.",
+    },
+    {
+        "id": "test-3",
+        "question": "TEST MODE: Which language is commonly used for database queries?",
+        "options": ["HTML", "SQL", "CSS", "XML"],
+        "correct_index": 1,
+        "difficulty": "medium",
+        "topic": "Automation Test",
+        "explanation": "SQL is commonly used to query relational databases.",
+    },
+    {
+        "id": "test-4",
+        "question": "TEST MODE: Which algorithmic complexity is fastest here?",
+        "options": ["O(n2)", "O(n log n)", "O(n)", "O(1)"],
+        "correct_index": 3,
+        "difficulty": "medium",
+        "topic": "Automation Test",
+        "explanation": "O(1) is constant time and is fastest among these choices.",
+    },
+    {
+        "id": "test-5",
+        "question": "TEST MODE: Which normal form removes transitive dependency?",
+        "options": ["1NF", "2NF", "3NF", "BCNF"],
+        "correct_index": 2,
+        "difficulty": "medium",
+        "topic": "Automation Test",
+        "explanation": "Third Normal Form removes transitive dependencies.",
+    },
+    {
+        "id": "test-6",
+        "question": "TEST MODE: Which scheduling algorithm uses a time quantum?",
+        "options": ["FCFS", "SJF", "Round Robin", "Priority Scheduling"],
+        "correct_index": 2,
+        "difficulty": "medium",
+        "topic": "Automation Test",
+        "explanation": "Round Robin uses a fixed time quantum for each process.",
+    },
+    {
+        "id": "test-7",
+        "question": "TEST MODE: Which machine learning type uses labeled data?",
+        "options": ["Unsupervised", "Supervised", "Reinforcement", "Clustering"],
+        "correct_index": 1,
+        "difficulty": "hard",
+        "topic": "Automation Test",
+        "explanation": "Supervised learning trains on labeled examples.",
+    },
+    {
+        "id": "test-8",
+        "question": "TEST MODE: What does Git primarily provide?",
+        "options": ["Version control", "Database locking", "Memory paging", "CPU scheduling"],
+        "correct_index": 0,
+        "difficulty": "hard",
+        "topic": "Automation Test",
+        "explanation": "Git is a distributed version control system.",
+    },
+    {
+        "id": "test-9",
+        "question": "TEST MODE: Which traversal commonly uses a queue?",
+        "options": ["DFS", "BFS", "Backtracking", "Quick Sort"],
+        "correct_index": 1,
+        "difficulty": "hard",
+        "topic": "Automation Test",
+        "explanation": "Breadth First Search commonly uses a queue.",
+    },
+    {
+        "id": "test-10",
+        "question": "TEST MODE: Which metric combines precision and recall?",
+        "options": ["Accuracy", "F1-score", "Latency", "Throughput"],
+        "correct_index": 1,
+        "difficulty": "hard",
+        "topic": "Automation Test",
+        "explanation": "F1-score is the harmonic mean of precision and recall.",
+    },
+]
+
 
 def normalize_subject(value, default=None):
     if value is None or value == '':
@@ -34,6 +129,10 @@ def normalize_subject(value, default=None):
 
     normalized = str(value).strip().lower().replace('-', '_').replace(' ', '_')
     return SUBJECT_ALIASES.get(normalized)
+
+
+def is_test_mode_enabled(value):
+    return str(value).strip().lower() in {'1', 'true', 'yes', 'on'}
 
 
 class RegisterAPIView(APIView):
@@ -65,6 +164,21 @@ class QuestionBatchAPIView(APIView):
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+        test_mode = is_test_mode_enabled(request.query_params.get('test'))
+        if test_mode:
+            # In test mode, bypass the database and random shuffle completely.
+            # Katalon can now rely on stable question text, option order, and answers.
+            questions = [
+                {**question, "subject": subject}
+                for question in TEST_MODE_QUESTIONS
+            ]
+            return Response({
+                "subject": subject,
+                "test_mode": True,
+                "questions": questions,
+                subject: questions,
+            })
         
         # Return only questions for the requested subject. Do not fall back to all
         # subjects, because that mixes categories in the quiz UI.
